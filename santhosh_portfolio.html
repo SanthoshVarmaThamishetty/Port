@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Santhosh T — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;overflow-x:hidden;background:#030912;font-family:'Rajdhani',sans-serif;color:#E0EAF5}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:#0AFFE6}
+#intro{position:fixed;inset:0;background:#030912;z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity 1s ease,transform 1s ease}
+#intro.away{opacity:0;transform:scale(1.06);pointer-events:none}
+.gbg{position:absolute;inset:0;background-image:linear-gradient(rgba(10,255,230,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(10,255,230,.02) 1px,transparent 1px);background-size:50px 50px;pointer-events:none}
+.rglow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(10,255,230,.055) 0%,transparent 65%);pointer-events:none}
+#svgwrap{width:820px;height:560px;position:relative;flex-shrink:0}
+#stage{width:100%;height:100%;cursor:default;user-select:none}
+.hint{text-align:center;margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#334455;letter-spacing:2px}
+.hint span{color:#0AFFE6;font-weight:700}
+#pbar-wrap{width:260px;height:4px;background:rgba(10,255,230,.1);border-radius:2px;margin:14px auto 0;overflow:hidden}
+#pbar{height:100%;width:0%;background:linear-gradient(90deg,#0AFFE6,#FFD700);border-radius:2px;transition:width .1s ease}
+#stxt{font-family:'JetBrains Mono',monospace;font-size:11px;color:#334455;letter-spacing:1.5px;margin-top:8px;text-align:center;min-height:16px;transition:color .4s}
+@keyframes blink{0%,88%,100%{opacity:1}94%{opacity:0}}
+@keyframes scanY{0%{transform:translateY(0)}100%{transform:translateY(26px)}}
+@keyframes rpulse{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes rring{0%,100%{opacity:0;transform:scale(.7)}50%{opacity:.4;transform:scale(1.3)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes orbit-a{from{transform:rotate(0deg) translateX(148px) rotate(0deg)}to{transform:rotate(360deg) translateX(148px) rotate(-360deg)}}
+@keyframes orbit-b{from{transform:rotate(72deg) translateX(160px) rotate(-72deg)}to{transform:rotate(432deg) translateX(160px) rotate(-432deg)}}
+@keyframes orbit-c{from{transform:rotate(144deg) translateX(144px) rotate(-144deg)}to{transform:rotate(504deg) translateX(144px) rotate(-504deg)}}
+@keyframes orbit-d{from{transform:rotate(216deg) translateX(156px) rotate(-216deg)}to{transform:rotate(576deg) translateX(156px) rotate(-576deg)}}
+@keyframes orbit-e{from{transform:rotate(288deg) translateX(150px) rotate(-288deg)}to{transform:rotate(648deg) translateX(150px) rotate(-648deg)}}
+@keyframes fadeup{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+#portfolio{opacity:0;transition:opacity 1.3s ease;pointer-events:none;overflow-y:auto}
+#portfolio.visible{opacity:1;pointer-events:all;overflow-y:auto}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(3,9,18,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(10,255,230,.1);padding:14px 48px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Orbitron',monospace;font-size:16px;font-weight:900;background:linear-gradient(90deg,#0AFFE6,#FFD700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:3px}
+.nav-links{display:flex;gap:32px}
+.nav-link{color:#445566;text-decoration:none;font-size:10px;letter-spacing:2px;text-transform:uppercase;transition:color .3s;cursor:pointer;font-weight:600}
+.nav-link:hover{color:#0AFFE6}
+#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:110px 48px 60px;position:relative;overflow:hidden}
+.hgrid{position:absolute;inset:0;background-image:linear-gradient(rgba(10,255,230,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(10,255,230,.015) 1px,transparent 1px);background-size:52px 52px}
+.hglow{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(10,255,230,.05) 0%,transparent 65%);pointer-events:none}
+.hi{display:flex;align-items:center;gap:64px;z-index:1;max-width:1080px;flex-wrap:wrap;justify-content:center}
+.rs{position:relative;width:360px;height:360px;flex-shrink:0;animation:float 4.5s ease-in-out infinite}
+.or{position:absolute;top:50%;left:50%;border-radius:50%;border:1px dashed rgba(10,255,230,.1)}
+.or1{width:316px;height:316px;margin:-158px 0 0 -158px}
+.or2{width:360px;height:360px;margin:-180px 0 0 -180px;border-color:rgba(255,215,0,.07)}
+.tnh{position:absolute;left:50%;top:50%;width:68px;height:68px;margin:-34px 0 0 -34px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.rc{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10}
+.ht{max-width:440px;animation:fadeup 1s ease both .3s}
+.pre{font-family:'JetBrains Mono',monospace;font-size:10px;color:#0AFFE6;letter-spacing:3px;margin-bottom:12px;opacity:.8}
+h1.name{font-family:'Orbitron',monospace;font-size:clamp(32px,5vw,52px);font-weight:900;line-height:1.05;margin-bottom:8px;background:linear-gradient(140deg,#E8F4FD,#0AFFE6 55%,#FFD700);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-size:13px;color:#445566;letter-spacing:4px;text-transform:uppercase;margin-bottom:18px;font-weight:600}
+.bio{font-size:15px;line-height:1.9;color:#7A8EA0;margin-bottom:24px}
+.bio em{color:#0AFFE6;font-style:normal}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px}
+.tag{padding:5px 13px;border:1px solid rgba(10,255,230,.25);border-radius:20px;font-size:10px;color:#0AFFE6;background:rgba(10,255,230,.03)}
+.cr{display:flex;gap:12px;flex-wrap:wrap}
+.bp{padding:12px 28px;background:#0AFFE6;color:#030912;border-radius:8px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-decoration:none;text-transform:uppercase}
+.bo{padding:12px 26px;background:transparent;color:#0AFFE6;border:1px solid #0AFFE6;border-radius:8px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-decoration:none;text-transform:uppercase}
+section.sec{padding:80px 48px;max-width:1100px;margin:0 auto}
+.alt{background:rgba(10,255,230,.016);padding:80px 0}
+.alt>div,.altg>div{max-width:1100px;margin:0 auto;padding:0 48px}
+.altg{background:rgba(255,215,0,.012);padding:80px 0}
+.sh{display:flex;align-items:center;gap:12px;margin-bottom:40px}
+.sb2{width:3px;height:26px;background:#0AFFE6;border-radius:2px;flex-shrink:0}
+.st{font-family:'Orbitron',monospace;font-size:18px;font-weight:700;letter-spacing:3px;text-transform:uppercase}
+.sl3{height:1px;flex:1;background:rgba(10,255,230,.12);max-width:70px}
+.sr{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+.sr.v{opacity:1;transform:translateY(0)}
+.ag{display:grid;grid-template-columns:1fr 1.5fr;gap:48px;align-items:start}
+.pc{background:rgba(255,255,255,.028);border:1px solid rgba(10,255,230,.14);border-radius:18px;padding:30px;text-align:center}
+.av{width:88px;height:88px;border-radius:50%;margin:0 auto 16px;background:linear-gradient(135deg,rgba(10,255,230,.16),rgba(255,215,0,.16));border:3px solid #0AFFE6;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-size:26px;font-weight:900;color:#0AFFE6}
+.pn{font-family:'Orbitron',monospace;font-size:15px;color:#E0EAF5;margin-bottom:4px}
+.pr{color:#445566;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px}
+.clist{display:flex;flex-direction:column;gap:9px;text-align:left}
+.ci{display:flex;align-items:center;gap:9px;font-size:12px;color:#5A7080}
+.cico{color:#0AFFE6;width:15px;text-align:center}
+.srr{display:flex;justify-content:space-around;margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.04)}
+.sv{font-family:'Orbitron',monospace;font-size:20px;color:#0AFFE6;font-weight:700;text-align:center}
+.sl4{font-size:10px;color:#334455;letter-spacing:1.5px;text-align:center;margin-top:2px}
+.bt{font-size:15px;line-height:1.95;color:#7A8EA0}
+.bt em{color:#0AFFE6;font-style:normal}
+.cw{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.cp{display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:20px;border:1px solid rgba(10,255,230,.2);background:rgba(10,255,230,.03);font-size:10px;color:#0AFFE6;transition:all .3s;cursor:default}
+.cp:hover{background:rgba(10,255,230,.09);border-color:#0AFFE6}
+.cd{width:4px;height:4px;border-radius:50%;background:#0AFFE6;flex-shrink:0}
+.skg{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.skc{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.055);border-radius:14px;padding:24px}
+.skcat{font-size:10px;letter-spacing:3px;color:#0AFFE6;text-transform:uppercase;font-weight:700;margin-bottom:18px}
+.skr{margin-bottom:14px}
+.sklb{display:flex;justify-content:space-between;font-size:12px;color:#99AABB;margin-bottom:5px}
+.skp{color:#0AFFE6;font-family:'JetBrains Mono',monospace;font-size:10px}
+.skt{height:4px;background:rgba(255,255,255,.065);border-radius:3px;overflow:hidden}
+.skf{height:100%;border-radius:3px;background:linear-gradient(90deg,#0AFFE6,#FFD700);width:0%;transition:width 1.8s cubic-bezier(.4,0,.2,1)}
+.el{display:flex;flex-direction:column;gap:18px}
+.ec{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.055);border-radius:0 13px 13px 0;padding:24px 28px;transition:all .3s}
+.ec:hover{background:rgba(255,255,255,.045)}
+.ehr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.er{font-family:'Orbitron',monospace;font-size:13px;color:#E0EAF5;margin-bottom:3px}
+.ep{padding:4px 12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;font-size:9px;color:#445566;font-family:'JetBrains Mono',monospace}
+.ebl{list-style:none;display:flex;flex-direction:column;gap:6px}
+.eb{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:#6A8090;line-height:1.65}
+.edd{font-size:8px;flex-shrink:0;margin-top:4px}
+.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.prc{background:rgba(255,255,255,.018);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:24px;cursor:default;transition:all .4s}
+.prc:hover{background:rgba(10,255,230,.035);border-color:rgba(10,255,230,.35);transform:translateY(-5px);box-shadow:0 16px 48px rgba(10,255,230,.06)}
+.prh{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.prt{font-family:'Orbitron',monospace;font-size:11px;color:#E0EAF5;line-height:1.4;flex:1;padding-right:8px}
+.prt a{color:#0AFFE6;text-decoration:none;border-bottom:1px solid rgba(10,255,230,.3);transition:border-color .3s}
+.prt a:hover{border-color:#0AFFE6}
+.prtg{padding:3px 9px;border-radius:12px;font-size:9px;font-family:'JetBrains Mono',monospace;flex-shrink:0}
+.prs{font-size:10px;font-family:'JetBrains Mono',monospace;color:#0AFFE6;opacity:.6;margin-bottom:10px}
+.prd{font-size:12.5px;color:#606F7A;line-height:1.75}
+.cs{text-align:center;padding:80px 48px}
+.ci2{max-width:580px;margin:0 auto}
+.cp2{font-size:15px;color:#6A7E8A;line-height:1.85;margin:18px 0 38px}
+.ctbs{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+footer{padding:20px 48px;border-top:1px solid rgba(255,255,255,.04);text-align:center;color:#283340;font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:2px}
+.tk{overflow:hidden;background:rgba(10,255,230,.035);border-top:1px solid rgba(10,255,230,.08);border-bottom:1px solid rgba(10,255,230,.08);padding:7px 0}
+.tki{display:flex;white-space:nowrap;animation:ticker 20s linear infinite}
+.tkm{font-size:10px;font-family:'JetBrains Mono',monospace;color:#0AFFE6;opacity:.55;padding:0 36px;letter-spacing:2px}
+@media(max-width:700px){
+  #svgwrap{width:100%;max-width:100vw;height:auto;aspect-ratio:820/560}
+  #stage{width:100%;height:100%}
+  .hint{font-size:10px;padding:0 16px}
+  #pbar-wrap{width:80vw}
+  nav{padding:12px 20px}
+  .logo{font-size:14px}
+  .nav-links{display:none}
+  #hero{padding:90px 20px 50px;min-height:auto}
+  .hi{flex-direction:column;gap:32px}
+  .rs{width:260px;height:260px}
+  .or1{width:228px;height:228px;margin:-114px 0 0 -114px}
+  .or2{width:260px;height:260px;margin:-130px 0 0 -130px}
+  .tnh{width:50px;height:50px;margin:-25px 0 0 -25px}
+  .tnh span:first-child{font-size:12px}
+  .tnh span:last-child{font-size:6px}
+  h1.name{font-size:36px}
+  .sub{font-size:11px;letter-spacing:2px}
+  .bio{font-size:14px}
+  .ht{text-align:center;max-width:100%}
+  .cr{justify-content:center}
+  section.sec{padding:52px 20px}
+  .alt>div,.altg>div{padding:0 20px}
+  .alt{padding:52px 0}
+  .altg{padding:52px 0}
+  .ag{grid-template-columns:1fr}
+  .skg{grid-template-columns:1fr}
+  .pg{grid-template-columns:1fr}
+  .cs{padding:52px 20px}
+  footer{padding:20px}
+  .st{font-size:15px;letter-spacing:2px}
+  .eb{font-size:12px}
+  .er{font-size:12px}
+}
+@media(max-width:400px){
+  h1.name{font-size:28px}
+  .rs{width:220px;height:220px}
+}
+</style>
+</head>
+<body>
+
+<div id="intro">
+  <div class="gbg"></div>
+  <div class="rglow"></div>
+  <div id="svgwrap">
+    <svg id="stage" viewBox="0 0 820 560" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="fc"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <radialGradient id="bg2" cx="50%" cy="50%" r="55%">
+          <stop offset="0%" stop-color="#0AFFE6" stop-opacity=".05"/>
+          <stop offset="100%" stop-color="#030912" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="410" cy="280" rx="280" ry="210" fill="url(#bg2)" id="centerGlow" opacity="0"/>
+      <circle cx="410" cy="280" r="195" fill="none" stroke="rgba(10,255,230,.06)" stroke-width="1" stroke-dasharray="4 7" id="ring1" opacity="0"/>
+      <circle cx="410" cy="280" r="222" fill="none" stroke="rgba(255,215,0,.04)" stroke-width="1" stroke-dasharray="3 9" id="ring2" opacity="0"/>
+      <g id="n0" transform="translate(120,95)" opacity="0"><circle r="40" fill="#030912" stroke="#0AFFE6" stroke-width="1.5" opacity=".2"/><circle r="31" fill="#07121F" stroke="#0AFFE6" stroke-width="1.8" id="nc0"/><text y="-9" text-anchor="middle" font-size="19">🐍</text><text y="10" text-anchor="middle" fill="#0AFFE6" font-size="8" font-weight="700" font-family="JetBrains Mono,monospace">PYTHON</text><text y="20" text-anchor="middle" fill="#0AFFE6" font-size="6.5" font-family="JetBrains Mono,monospace" opacity=".35" id="ns0">OFFLINE</text></g>
+      <g id="n1" transform="translate(700,90)" opacity="0"><circle r="40" fill="#030912" stroke="#FFD700" stroke-width="1.5" opacity=".2"/><circle r="31" fill="#07121F" stroke="#FFD700" stroke-width="1.8" id="nc1"/><text y="-9" text-anchor="middle" font-size="19">🤖</text><text y="10" text-anchor="middle" fill="#FFD700" font-size="8" font-weight="700" font-family="JetBrains Mono,monospace">ML / AI</text><text y="20" text-anchor="middle" fill="#FFD700" font-size="6.5" font-family="JetBrains Mono,monospace" opacity=".35" id="ns1">OFFLINE</text></g>
+      <g id="n2" transform="translate(90,430)" opacity="0"><circle r="40" fill="#030912" stroke="#0AFF6E" stroke-width="1.5" opacity=".2"/><circle r="31" fill="#07121F" stroke="#0AFF6E" stroke-width="1.8" id="nc2"/><text y="-9" text-anchor="middle" font-size="19">☁️</text><text y="10" text-anchor="middle" fill="#0AFF6E" font-size="8" font-weight="700" font-family="JetBrains Mono,monospace">AWS</text><text y="20" text-anchor="middle" fill="#0AFF6E" font-size="6.5" font-family="JetBrains Mono,monospace" opacity=".35" id="ns2">OFFLINE</text></g>
+      <g id="n3" transform="translate(710,430)" opacity="0"><circle r="40" fill="#030912" stroke="#FF6EC7" stroke-width="1.5" opacity=".2"/><circle r="31" fill="#07121F" stroke="#FF6EC7" stroke-width="1.8" id="nc3"/><text y="-9" text-anchor="middle" font-size="19">🌐</text><text y="10" text-anchor="middle" fill="#FF6EC7" font-size="8" font-weight="700" font-family="JetBrains Mono,monospace">GCP</text><text y="20" text-anchor="middle" fill="#FF6EC7" font-size="6.5" font-family="JetBrains Mono,monospace" opacity=".35" id="ns3">OFFLINE</text></g>
+      <g id="n4" transform="translate(410,510)" opacity="0"><circle r="40" fill="#030912" stroke="#FF9500" stroke-width="1.5" opacity=".2"/><circle r="31" fill="#07121F" stroke="#FF9500" stroke-width="1.8" id="nc4"/><text y="-9" text-anchor="middle" font-size="19">🗄️</text><text y="10" text-anchor="middle" fill="#FF9500" font-size="8" font-weight="700" font-family="JetBrains Mono,monospace">SQL</text><text y="20" text-anchor="middle" fill="#FF9500" font-size="6.5" font-family="JetBrains Mono,monospace" opacity=".35" id="ns4">OFFLINE</text></g>
+      <g id="cables"></g>
+      <g id="sparks"></g>
+      <g id="robot" transform="translate(80,280)" style="cursor:grab">
+        <circle r="60" fill="rgba(10,255,230,.03)" stroke="rgba(10,255,230,.12)" stroke-width="1"/>
+        <line x1="0" y1="-92" x2="0" y2="-110" stroke="#0AFFE6" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="0" cy="-113" r="4.5" fill="#FFD700" style="animation:blink 2.5s infinite" filter="url(#fc)"/>
+        <circle cx="0" cy="-113" r="10" fill="none" stroke="#FFD700" stroke-width=".8" opacity=".3" style="animation:rring 2.5s infinite"/>
+        <rect x="-40" y="-92" width="80" height="58" rx="10" fill="#07121F" stroke="#0AFFE6" stroke-width="1.4"/>
+        <rect x="-35" y="-86" width="70" height="28" rx="5" fill="#020B16" stroke="#0AFFE6" stroke-width=".8"/>
+        <rect x="-35" y="-86" width="70" height="5" rx="2" fill="#0AFFE6" opacity=".5" style="animation:scanY 1.8s ease-in-out infinite"/>
+        <circle cx="-18" cy="-72" r="8.5" fill="#010C1A"/><circle cx="-18" cy="-72" r="5.8" fill="#0AFFE6" opacity=".9" filter="url(#fc)"/><circle cx="-18" cy="-72" r="2.2" fill="white"/>
+        <circle cx="18" cy="-72" r="8.5" fill="#010C1A"/><circle cx="18" cy="-72" r="5.8" fill="#0AFFE6" opacity=".9" filter="url(#fc)"/><circle cx="18" cy="-72" r="2.2" fill="white"/>
+        <circle cx="-14" cy="-75" r="1.2" fill="white" opacity=".7"/><circle cx="22" cy="-75" r="1.2" fill="white" opacity=".7"/>
+        <rect x="-29" y="-50" width="58" height="9" rx="3" fill="#010B18" stroke="#0AFFE6" stroke-width=".6"/>
+        <rect x="-26" y="-48" width="8" height="5" rx="1.5" fill="#0AFFE6" opacity=".6"/><rect x="-16" y="-48" width="8" height="5" rx="1.5" fill="#0AFFE6" opacity=".3"/><rect x="-6" y="-48" width="8" height="5" rx="1.5" fill="#0AFFE6" opacity=".6"/><rect x="4" y="-48" width="8" height="5" rx="1.5" fill="#0AFFE6" opacity=".3"/><rect x="14" y="-48" width="8" height="5" rx="1.5" fill="#0AFFE6" opacity=".6"/>
+        <rect x="-13" y="-34" width="26" height="11" rx="5" fill="#07121F" stroke="#0AFFE6" stroke-width=".9"/>
+        <ellipse cx="-58" cy="-14" rx="18" ry="13" fill="#07121F" stroke="#0AFFE6" stroke-width="1.3"/>
+        <ellipse cx="58" cy="-14" rx="18" ry="13" fill="#07121F" stroke="#0AFFE6" stroke-width="1.3"/>
+        <rect x="-45" y="-23" width="90" height="88" rx="13" fill="#07121F" stroke="#0AFFE6" stroke-width="1.4"/>
+        <rect x="-37" y="-15" width="74" height="52" rx="7" fill="#020810" stroke="#0AFFE6" stroke-width=".7"/>
+        <text x="0" y="-3" text-anchor="middle" fill="#0AFFE6" font-size="6" font-family="JetBrains Mono,monospace">DRAG TO CENTER</text>
+        <rect x="-30" y="5" width="60" height="5" rx="2.5" fill="#0A1A28"/>
+        <rect x="-30" y="5" id="cbar" width="0" height="5" rx="2.5" fill="#0AFFE6"/>
+        <circle id="d0" cx="-24" cy="20" r="4.5" fill="#0A1520" stroke="#1A2E40" stroke-width="1"/>
+        <circle id="d1" cx="-12" cy="20" r="4.5" fill="#0A1520" stroke="#1A2E40" stroke-width="1"/>
+        <circle id="d2" cx="0" cy="20" r="4.5" fill="#0A1520" stroke="#1A2E40" stroke-width="1"/>
+        <circle id="d3" cx="12" cy="20" r="4.5" fill="#0A1520" stroke="#1A2E40" stroke-width="1"/>
+        <circle id="d4" cx="24" cy="20" r="4.5" fill="#0A1520" stroke="#1A2E40" stroke-width="1"/>
+        <rect x="-28" y="32" width="7" height="12" rx="1.5" fill="#0AFFE6" opacity=".65"/><rect x="-19" y="36" width="7" height="8" rx="1.5" fill="#FFD700" opacity=".65"/><rect x="-10" y="29" width="7" height="15" rx="1.5" fill="#0AFF6E" opacity=".6"/><rect x="-1" y="33" width="7" height="11" rx="1.5" fill="#0AFFE6" opacity=".6"/><rect x="8" y="30" width="7" height="14" rx="1.5" fill="#FF9500" opacity=".65"/><rect x="17" y="35" width="7" height="9" rx="1.5" fill="#FF6EC7" opacity=".6"/>
+        <circle cx="0" cy="49" r="10" fill="#020810" stroke="#FFD700" stroke-width="1.3"/>
+        <circle cx="0" cy="49" r="5.5" fill="#FFD700" opacity=".45" style="animation:rpulse 2s infinite"/>
+        <circle cx="0" cy="49" r="2.5" fill="#FFD700"/>
+        <rect x="-76" y="-27" width="20" height="56" rx="9" fill="#07121F" stroke="#0AFFE6" stroke-width="1.3"/>
+        <rect x="-76" y="7" width="20" height="6" rx="3" fill="#0AFFE6" opacity=".2"/>
+        <rect x="-82" y="27" width="30" height="13" rx="6" fill="#07121F" stroke="#0AFFE6" stroke-width="1"/>
+        <rect x="56" y="-27" width="20" height="56" rx="9" fill="#07121F" stroke="#0AFFE6" stroke-width="1.3"/>
+        <rect x="56" y="7" width="20" height="6" rx="3" fill="#0AFFE6" opacity=".2"/>
+        <rect x="52" y="27" width="30" height="13" rx="6" fill="#07121F" stroke="#0AFFE6" stroke-width="1"/>
+        <rect x="-36" y="65" width="72" height="13" rx="6" fill="#020810" stroke="#0AFFE6" stroke-width=".8"/>
+        <rect x="-16" y="67" width="32" height="9" rx="4" fill="#0AFFE6" opacity=".14"/>
+        <rect x="-38" y="78" width="28" height="58" rx="9" fill="#07121F" stroke="#0AFFE6" stroke-width="1.3"/>
+        <rect x="10" y="78" width="28" height="58" rx="9" fill="#07121F" stroke="#0AFFE6" stroke-width="1.3"/>
+        <circle cx="-24" cy="113" r="4.5" fill="#0AFFE6" opacity=".42"/><circle cx="24" cy="113" r="4.5" fill="#0AFFE6" opacity=".42"/>
+        <rect x="-47" y="134" width="40" height="14" rx="7" fill="#07121F" stroke="#0AFFE6" stroke-width="1"/>
+        <rect x="7" y="134" width="40" height="14" rx="7" fill="#07121F" stroke="#0AFFE6" stroke-width="1"/>
+        <rect x="-44" y="137" width="12" height="4" rx="2" fill="#0AFFE6" opacity=".3"/><rect x="10" y="137" width="12" height="4" rx="2" fill="#0AFFE6" opacity=".3"/>
+        <g id="arrowHint" opacity=".7">
+          <text x="95" y="8" fill="#0AFFE6" font-size="24" font-family="Arial">&#8594;</text>
+          <text x="116" y="8" fill="#0AFFE6" font-size="24" font-family="Arial" opacity=".35">&#8594;</text>
+        </g>
+      </g>
+    </svg>
+  </div>
+  <p class="hint">Drag the <span>Commander</span> to the center — all wires connect automatically</p>
+  <div id="pbar-wrap"><div id="pbar"></div></div>
+  <div id="stxt">Pull the robot to the center…</div>
+</div>
+
+<div id="portfolio">
+<nav>
+  <div class="logo">ST</div>
+  <div class="nav-links">
+    <a class="nav-link" href="#about">About</a>
+    <a class="nav-link" href="#skills">Skills</a>
+    <a class="nav-link" href="#experience">Experience</a>
+    <a class="nav-link" href="#projects">Projects</a>
+    <a class="nav-link" href="#contact">Contact</a>
+  </div>
+</nav>
+<section id="hero">
+  <div class="hgrid"></div><div class="hglow"></div>
+  <div class="hi">
+    <div class="rs">
+      <div class="or or1"></div><div class="or or2"></div>
+      <div class="tnh" style="animation:orbit-a 9s linear infinite;background:rgba(10,255,230,.06);border:2px solid #0AFFE6;box-shadow:0 0 12px rgba(10,255,230,.22)"><span style="font-size:15px">🐍</span><span style="font-size:8px;color:#0AFFE6;font-weight:700">PYTHON</span></div>
+      <div class="tnh" style="animation:orbit-b 11s linear infinite;background:rgba(255,215,0,.06);border:2px solid #FFD700;box-shadow:0 0 12px rgba(255,215,0,.18)"><span style="font-size:15px">🤖</span><span style="font-size:8px;color:#FFD700;font-weight:700">ML/AI</span></div>
+      <div class="tnh" style="animation:orbit-c 8s linear infinite;background:rgba(10,255,110,.06);border:2px solid #0AFF6E;box-shadow:0 0 12px rgba(10,255,110,.18)"><span style="font-size:15px">☁️</span><span style="font-size:8px;color:#0AFF6E;font-weight:700">AWS</span></div>
+      <div class="tnh" style="animation:orbit-d 12s linear infinite;background:rgba(255,110,199,.06);border:2px solid #FF6EC7;box-shadow:0 0 12px rgba(255,110,199,.18)"><span style="font-size:15px">🌐</span><span style="font-size:8px;color:#FF6EC7;font-weight:700">GCP</span></div>
+      <div class="tnh" style="animation:orbit-e 10s linear infinite;background:rgba(255,149,0,.06);border:2px solid #FF9500;box-shadow:0 0 12px rgba(255,149,0,.18)"><span style="font-size:15px">🗄️</span><span style="font-size:8px;color:#FF9500;font-weight:700">SQL</span></div>
+      <div class="rc">
+        <svg viewBox="0 0 200 305" width="185" height="285" style="filter:drop-shadow(0 0 18px rgba(10,255,230,.35))">
+          <line x1="100" y1="26" x2="100" y2="8" stroke="#0AFFE6" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="100" cy="5" r="4" fill="#FFD700" style="animation:blink 2.5s infinite"/>
+          <rect x="62" y="26" width="76" height="58" rx="10" fill="#07121F" stroke="#0AFFE6" stroke-width="1.4"/>
+          <rect x="67" y="33" width="66" height="26" rx="4" fill="#020B16" stroke="#0AFFE6" stroke-width=".8"/>
+          <rect x="67" y="33" width="66" height="5" rx="2" fill="#0AFFE6" opacity=".45" style="animation:scanY 1.9s ease-in-out infinite"/>
+          <circle cx="84" cy="46" r="8" fill="#010C1A"/><circle cx="84" cy="46" r="5.2" fill="#0AFFE6" opacity=".9"/><circle cx="84" cy="46" r="2" fill="white"/>
+          <circle cx="116" cy="46" r="8" fill="#010C1A"/><circle cx="116" cy="46" r="5.2" fill="#0AFFE6" opacity=".9"/><circle cx="116" cy="46" r="2" fill="white"/>
+          <rect x="75" y="69" width="50" height="8" rx="3" fill="#01090F" stroke="#0AFFE6" stroke-width=".6"/>
+          <rect x="78" y="71" width="6" height="4" rx="1" fill="#0AFFE6" opacity=".6"/><rect x="86" y="71" width="6" height="4" rx="1" fill="#0AFFE6" opacity=".35"/><rect x="94" y="71" width="6" height="4" rx="1" fill="#0AFFE6" opacity=".6"/><rect x="102" y="71" width="6" height="4" rx="1" fill="#0AFFE6" opacity=".35"/><rect x="110" y="71" width="6" height="4" rx="1" fill="#0AFFE6" opacity=".6"/>
+          <rect x="88" y="84" width="24" height="11" rx="4" fill="#07121F" stroke="#0AFFE6" stroke-width=".9"/>
+          <ellipse cx="52" cy="108" rx="15" ry="12" fill="#07121F" stroke="#0AFFE6" stroke-width="1.2"/>
+          <ellipse cx="148" cy="108" rx="15" ry="12" fill="#07121F" stroke="#0AFFE6" stroke-width="1.2"/>
+          <rect x="58" y="95" width="84" height="82" rx="12" fill="#07121F" stroke="#0AFFE6" stroke-width="1.4"/>
+          <rect x="66" y="104" width="68" height="46" rx="6" fill="#020810" stroke="#0AFFE6" stroke-width=".7"/>
+          <text x="100" y="114" text-anchor="middle" fill="#0AFFE6" font-size="5.5" font-family="JetBrains Mono,monospace">TEAM STATUS</text>
+          <rect x="70" y="120" width="6" height="16" rx="1.5" fill="#0AFFE6" opacity=".7"/><rect x="79" y="124" width="6" height="12" rx="1.5" fill="#FFD700" opacity=".7"/><rect x="88" y="118" width="6" height="18" rx="1.5" fill="#0AFF6E" opacity=".65"/><rect x="97" y="122" width="6" height="14" rx="1.5" fill="#0AFFE6" opacity=".65"/><rect x="106" y="120" width="6" height="16" rx="1.5" fill="#FF9500" opacity=".65"/><rect x="115" y="123" width="6" height="13" rx="1.5" fill="#FF6EC7" opacity=".6"/>
+          <circle cx="72" cy="143" r="2.5" fill="#0AFF6E"/>
+          <text x="77" y="146" fill="#334455" font-size="5" font-family="JetBrains Mono,monospace">ALL SYSTEMS OK</text>
+          <circle cx="100" cy="162" r="9" fill="#020810" stroke="#FFD700" stroke-width="1.2"/>
+          <circle cx="100" cy="162" r="5" fill="#FFD700" opacity=".5" style="animation:rpulse 2s infinite"/>
+          <circle cx="100" cy="162" r="2" fill="#FFD700"/>
+          <rect x="32" y="99" width="17" height="48" rx="8" fill="#07121F" stroke="#0AFFE6" stroke-width="1.2"/>
+          <rect x="29" y="145" width="22" height="11" rx="5" fill="#07121F" stroke="#0AFFE6" stroke-width=".9"/>
+          <rect x="151" y="99" width="17" height="48" rx="8" fill="#07121F" stroke="#0AFFE6" stroke-width="1.2"/>
+          <rect x="149" y="145" width="22" height="11" rx="5" fill="#07121F" stroke="#0AFFE6" stroke-width=".9"/>
+          <rect x="68" y="177" width="64" height="12" rx="5" fill="#020810" stroke="#0AFFE6" stroke-width=".8"/>
+          <rect x="68" y="189" width="26" height="50" rx="8" fill="#07121F" stroke="#0AFFE6" stroke-width="1.2"/>
+          <rect x="106" y="189" width="26" height="50" rx="8" fill="#07121F" stroke="#0AFFE6" stroke-width="1.2"/>
+          <circle cx="81" cy="218" r="4" fill="#0AFFE6" opacity=".45"/><circle cx="119" cy="218" r="4" fill="#0AFFE6" opacity=".45"/>
+          <rect x="60" y="237" width="38" height="12" rx="6" fill="#07121F" stroke="#0AFFE6" stroke-width=".9"/>
+          <rect x="102" y="237" width="38" height="12" rx="6" fill="#07121F" stroke="#0AFFE6" stroke-width=".9"/>
+        </svg>
+      </div>
+    </div>
+    <div class="ht">
+      <div class="pre">&gt; PORTFOLIO_UNLOCKED.success()</div>
+      <h1 class="name">SANTHOSH<br/>T</h1>
+      <p class="sub">AI Engineer &amp; Applied AI Graduate</p>
+      <p class="bio">Building <em>ML pipelines &amp; agentic AI apps</em>, <em>RAG systems with LLM integration</em> &amp; <em>cloud-native backends on AWS/GCP</em>. 1+ year as a software developer with a <em>4.0/4.0 GPA</em> in Applied AI — Python to production.</p>
+      <div class="tags"><span class="tag">Python / Java</span><span class="tag">ML Pipelines</span><span class="tag">LLM / RAG / FAISS</span><span class="tag">AWS / GCP</span><span class="tag">Docker / Kubernetes</span><span class="tag">Airflow / Spark</span></div>
+      <div class="cr"><a href="mailto:t.santhosh2023@gmail.com" onclick="window.location.href='mailto:t.santhosh2023@gmail.com';return false;" class="bp">✉ Email Me</a><a href="tel:+12496422149" class="bo">✆ (249) 642-2149</a></div>
+    </div>
+  </div>
+</section>
+<div class="tk"><div class="tki" id="ticker"></div></div>
+<section class="sec" id="about"><div class="sr">
+  <div class="sh"><div class="sb2"></div><div class="st">About Me</div><div class="sl3"></div></div>
+  <div class="ag">
+    <div class="pc">
+      <div class="av">ST</div><div class="pn">Santhosh T</div><div class="pr">AI Engineer | Applied AI Graduate</div>
+      <div class="clist">
+        <div class="ci"><span class="cico">📍</span>Toronto, ON, Canada</div>
+        <div class="ci"><span class="cico">✉</span>t.santhosh2023@gmail.com</div>
+        <div class="ci"><span class="cico">✆</span>(249) 642-2149</div>
+        <div class="ci"><span class="cico">🎓</span>Post-Grad, Applied AI — George Brown College</div>
+      </div>
+      <div class="srr"><div><div class="sv">1.5+</div><div class="sl4">YRS EXP</div></div><div><div class="sv">4.0</div><div class="sl4">GPA</div></div><div><div class="sv">3</div><div class="sl4">CERTS</div></div></div>
+    </div>
+    <div>
+      <p class="bt" style="margin-bottom:16px">AI Engineer and Applied AI graduate with a <em>4.0/4.0 GPA</em> from George Brown College. Experienced in building <em>end-to-end ML pipelines</em>, <em>LLM-powered RAG applications</em>, and <em>agentic AI systems</em> deployed on AWS and GCP.</p>
+      <p class="bt">Comfortable across the full AI stack — data ingestion and feature engineering, model serving and monitoring, cloud infrastructure with Docker/Kubernetes, and real-time streaming with Kafka and Airflow. I bring strong software engineering foundations from 1+ years at Capgemini to every AI project.</p>
+      <div class="cw">
+        <span class="cp"><span class="cd"></span>AWS Certified Cloud Practitioner</span>
+        <span class="cp"><span class="cd"></span>Google Cloud Digital Leader</span>
+        <span class="cp"><span class="cd"></span>Microsoft Azure Fundamentals (AZ-900)</span>
+      </div>
+    </div>
+  </div>
+</div></section>
+<div class="alt"><div id="skills"><div class="sr">
+  <div class="sh"><div class="sb2"></div><div class="st">Technical Skills</div><div class="sl3"></div></div>
+  <div class="skg" id="skillsGrid">
+    <div class="skc"><div class="skcat">Languages &amp; Data</div>
+      <div class="skr"><div class="sklb"><span>Python</span><span class="skp">95%</span></div><div class="skt"><div class="skf" data-pct="95"></div></div></div>
+      <div class="skr"><div class="sklb"><span>Java 8+</span><span class="skp">85%</span></div><div class="skt"><div class="skf" data-pct="85"></div></div></div>
+      <div class="skr"><div class="sklb"><span>SQL / PostgreSQL / NoSQL</span><span class="skp">89%</span></div><div class="skt"><div class="skf" data-pct="89"></div></div></div>
+      <div class="skr"><div class="sklb"><span>Shell Scripting</span><span class="skp">80%</span></div><div class="skt"><div class="skf" data-pct="80"></div></div></div>
+    </div>
+    <div class="skc"><div class="skcat">ML &amp; AI</div>
+      <div class="skr"><div class="sklb"><span>LLM Integration / OpenAI API</span><span class="skp">91%</span></div><div class="skt"><div class="skf" data-pct="91"></div></div></div>
+      <div class="skr"><div class="sklb"><span>RAG Pipelines / FAISS</span><span class="skp">88%</span></div><div class="skt"><div class="skf" data-pct="88"></div></div></div>
+      <div class="skr"><div class="sklb"><span>ML Pipelines &amp; Feature Eng.</span><span class="skp">87%</span></div><div class="skt"><div class="skf" data-pct="87"></div></div></div>
+      <div class="skr"><div class="sklb"><span>Agentic AI / Predictive Analytics</span><span class="skp">85%</span></div><div class="skt"><div class="skf" data-pct="85"></div></div></div>
+    </div>
+    <div class="skc"><div class="skcat">Cloud &amp; MLOps</div>
+      <div class="skr"><div class="sklb"><span>AWS (Lambda, S3, RDS, SQS)</span><span class="skp">88%</span></div><div class="skt"><div class="skf" data-pct="88"></div></div></div>
+      <div class="skr"><div class="sklb"><span>GCP (Vertex AI, BigQuery)</span><span class="skp">83%</span></div><div class="skt"><div class="skf" data-pct="83"></div></div></div>
+      <div class="skr"><div class="sklb"><span>Docker / Kubernetes / Terraform</span><span class="skp">86%</span></div><div class="skt"><div class="skf" data-pct="86"></div></div></div>
+      <div class="skr"><div class="sklb"><span>Airflow / Kafka / CI/CD</span><span class="skp">84%</span></div><div class="skt"><div class="skf" data-pct="84"></div></div></div>
+    </div>
+  </div>
+</div></div></div>
+<section class="sec" id="experience"><div class="sr">
+  <div class="sh"><div class="sb2"></div><div class="st">Experience</div><div class="sl3"></div></div>
+  <div class="el">
+    <div class="ec" style="border-left:3px solid #0AFFE6"><div class="ehr"><div><div class="er">Applied AI — Teaching Assistant</div><div style="color:#0AFFE6;font-size:12px;font-weight:600;letter-spacing:1px">University of Toronto &nbsp;·&nbsp; Part-Time</div></div><div class="ep">Feb 2025 – Present</div></div><ul class="ebl"><li class="eb"><span class="edd" style="color:#0AFFE6">◆</span>Supporting students in understanding applied AI and ML concepts, clarifying doubts during office hours and lab sessions covering data pipelines, model development, and cloud architecture.</li><li class="eb"><span class="edd" style="color:#0AFFE6">◆</span>Providing hands-on project guidance, reviewing student work, and offering structured feedback on AI solution design to help students apply concepts to real-world problem-solving scenarios.</li></ul></div>
+    <div class="ec" style="border-left:3px solid #FFD700"><div class="ehr"><div><div class="er">AI Engineer &amp; Software Engineer</div><div style="color:#FFD700;font-size:12px;font-weight:600;letter-spacing:1px">Mercor &nbsp;·&nbsp; Part-Time &nbsp;·&nbsp; Toronto, ON</div></div><div class="ep">Oct 2025 – Feb 2026</div></div><ul class="ebl"><li class="eb"><span class="edd" style="color:#FFD700">◆</span>Evaluated and benchmarked LLM outputs for quality, accuracy, and safety; provided structured feedback to improve model responses, prompt designs, and reasoning quality.</li><li class="eb"><span class="edd" style="color:#FFD700">◆</span>Applied hands-on knowledge of agentic AI workflows, RAG pipelines, and LLM integration patterns to assess model behavior across diverse task types.</li></ul></div>
+    <div class="ec" style="border-left:3px solid #445566"><div class="ehr"><div><div class="er">Software Engineer — Backend &amp; Cloud</div><div style="color:#8899AA;font-size:12px;font-weight:600;letter-spacing:1px">Capgemini (Client: American Express) &nbsp;·&nbsp; India</div></div><div class="ep">Mar 2022 – Sep 2023</div></div><ul class="ebl"><li class="eb"><span class="edd" style="color:#445566">◆</span>Built and maintained Python and Java backend services on AWS, developing reliable REST APIs and batch data pipelines for enterprise-scale financial systems.</li><li class="eb"><span class="edd" style="color:#445566">◆</span>Applied TDD throughout the development lifecycle, reducing production defects by 30%; implemented observability and monitoring using Datadog, Grafana, and ELK Stack for end-to-end system health visibility.</li><li class="eb"><span class="edd" style="color:#445566">◆</span>Automated cloud infrastructure with Terraform and Jenkins CI/CD pipelines; managed and optimized SQL/RDS databases and ETL data flows at scale.</li><li class="eb"><span class="edd" style="color:#445566">◆</span>Collaborated with cross-functional teams in an Agile delivery model, participating in sprint planning, code reviews, and client-facing documentation to ensure accurate project artifacts and on-time delivery.</li></ul></div>
+  </div>
+</div></section>
+<div class="altg"><div id="projects"><div class="sr">
+  <div class="sh"><div class="sb2" style="background:#FFD700"></div><div class="st">Key Projects</div><div class="sl3" style="background:rgba(255,215,0,.12)"></div></div>
+  <div class="pg">
+    <div class="prc"><div class="prh"><div class="prt"><a href="https://santhosh-aiagent.netlify.app/" target="_blank" rel="noopener">Custom AI Agent</a></div><div class="prtg" style="background:rgba(255,215,0,.1);color:#FFD700">Agentic AI</div></div><div class="prs">Python · OpenAI API · AWS Lambda · DynamoDB · API Gateway · RAG</div><div class="prd">Built a production ChatGPT-style AI agent using Python and OpenAI API on a serverless AWS backend. Implemented RAG pipeline with vector embeddings, DynamoDB for state, and API Gateway for public endpoints — deployed with full CI/CD automation.</div></div>
+    <div class="prc"><div class="prh"><div class="prt"><a href="https://github.com/SanthoshVarmaThamishetty/santhosh-Retail-ai" target="_blank" rel="noopener">Retail Customized AI Agent</a></div><div class="prtg" style="background:rgba(10,255,230,.08);color:#0AFFE6">ML / RAG</div></div><div class="prs">FastAPI · LLM · RAG · FAISS Vector Search · Sentence Transformers · GCP</div><div class="prd">Built a production-grade Retail AI Agent using RAG pipelines, FAISS vector search with SentenceTransformer embeddings, and LLM orchestration for intelligent natural-language product recommendations. MLOps-ready: Dockerized, Kubernetes-orchestrated with Airflow DAG pipelines; deployed on GCP (Vertex AI, BigQuery, Cloud Storage) with FastAPI microservices backend.</div></div>
+  </div>
+</div></div></div>
+<section class="sec cs" id="contact"><div class="ci2 sr">
+  <div class="sh" style="justify-content:center;margin-bottom:0"><div class="st" style="text-align:center">Let's Build Something</div></div>
+  <p class="cp2">Open to AI engineering, ML, and software development roles. Toronto-based, open to hybrid and remote opportunities across North America.</p>
+  <div class="ctbs"><a href="mailto:t.santhosh2023@gmail.com" onclick="window.location.href='mailto:t.santhosh2023@gmail.com';return false;" class="bp">✉ Email Me</a><a href="tel:+12496422149" class="bo">✆ Call</a></div>
+</div></section>
+<footer>SANTHOSH T © 2026 &nbsp;//&nbsp; TORONTO, ON &nbsp;//&nbsp; AI ENGINEER</footer>
+</div>
+
+<script>
+const CENTER={x:410,y:280},START_X=80;
+const NODES=[
+  {x:120,y:95, color:'#0AFFE6',thresholdPct:.20},
+  {x:700,y:90, color:'#FFD700',thresholdPct:.40},
+  {x:90, y:430,color:'#0AFF6E',thresholdPct:.58},
+  {x:710,y:430,color:'#FF6EC7',thresholdPct:.74},
+  {x:410,y:510,color:'#FF9500',thresholdPct:.88},
+];
+const svg=document.getElementById('stage'),robot=document.getElementById('robot');
+const cablesG=document.getElementById('cables'),sparksG=document.getElementById('sparks');
+const cbar=document.getElementById('cbar'),stxt=document.getElementById('stxt'),pbar=document.getElementById('pbar');
+let robotX=START_X,isDragging=false,launched=false,connected=new Set();
+
+function svgX(cx){
+  const r=svg.getBoundingClientRect();
+  return(cx-r.left)/r.width*820;
+}
+function progress(){return Math.min(1,Math.max(0,(robotX-START_X)/(CENTER.x-START_X)));}
+function bezier(x1,y1,x2,y2){const dy=Math.abs(y2-y1)*.38;return`M${x1},${y1} C${x1},${y1+dy} ${x2},${y2-dy} ${x2},${y2}`;}
+
+function updateRobot(){
+  robot.setAttribute('transform',`translate(${robotX},${CENTER.y})`);
+  const p=progress();
+  const nf=Math.min(1,(p-.05)/.28);
+  for(let i=0;i<5;i++) document.getElementById('n'+i).setAttribute('opacity',Math.max(0,nf));
+  document.getElementById('ring1').setAttribute('opacity',nf*.8);
+  document.getElementById('ring2').setAttribute('opacity',nf*.55);
+  document.getElementById('centerGlow').setAttribute('opacity',nf);
+  document.getElementById('arrowHint').setAttribute('opacity',Math.max(0,1-p*6));
+  cbar.setAttribute('width',(p*60).toFixed(1));
+  pbar.style.width=(p*100)+'%';
+  const cnt=connected.size;
+  const msgs=['Pull the robot to the center…','Python connecting…','ML/AI powering up…','AWS coming online…','GCP syncing…','SQL stream ready…'];
+  stxt.textContent=msgs[Math.min(cnt,5)];
+  NODES.forEach((n,i)=>{if(!connected.has(i)&&p>=n.thresholdPct)connectNode(i);});
+  NODES.forEach((_,i)=>{const c=document.getElementById('cable-'+i);if(c)c.setAttribute('d',bezier(robotX,CENTER.y,NODES[i].x,NODES[i].y));});
+}
+
+function connectNode(i){
+  connected.add(i);
+  const n=NODES[i];
+  const nc=document.getElementById('nc'+i);
+  nc.setAttribute('stroke-width','2.8');
+  nc.style.filter=`drop-shadow(0 0 14px ${n.color})`;
+  document.getElementById('ns'+i).textContent='ONLINE';
+  document.getElementById('d'+i).setAttribute('fill',n.color);
+  document.getElementById('d'+i).setAttribute('stroke',n.color);
+  const cable=document.createElementNS('http://www.w3.org/2000/svg','path');
+  cable.id='cable-'+i;
+  cable.setAttribute('d',bezier(robotX,CENTER.y,n.x,n.y));
+  cable.setAttribute('fill','none');
+  cable.setAttribute('stroke',n.color);
+  cable.setAttribute('stroke-width','2.5');
+  cable.setAttribute('stroke-linecap','round');
+  cable.setAttribute('opacity','.75');
+  cablesG.appendChild(cable);
+  for(let k=0;k<8;k++){
+    const angle=(k/8)*Math.PI*2,len=18+Math.random()*16;
+    const spark=document.createElementNS('http://www.w3.org/2000/svg','line');
+    spark.setAttribute('x1',n.x);spark.setAttribute('y1',n.y);
+    spark.setAttribute('x2',n.x+Math.cos(angle)*len);spark.setAttribute('y2',n.y+Math.sin(angle)*len);
+    spark.setAttribute('stroke',n.color);spark.setAttribute('stroke-width','2');spark.setAttribute('stroke-linecap','round');spark.setAttribute('opacity','1');
+    sparksG.appendChild(spark);
+    setTimeout(()=>{spark.style.transition='opacity .4s';spark.setAttribute('opacity','0');},50);
+    setTimeout(()=>spark.remove(),500);
+  }
+}
+
+function snapToCenter(){
+  const startX=robotX,target=CENTER.x,dur=420,t0=performance.now();
+  function frame(now){
+    const t=Math.min(1,(now-t0)/dur),ease=1-Math.pow(1-t,3);
+    robotX=startX+(target-startX)*ease;
+    updateRobot();
+    if(t<1){requestAnimationFrame(frame);}
+    else{robotX=target;updateRobot();NODES.forEach((_,i)=>{if(!connected.has(i))connectNode(i);});setTimeout(finishIntro,850);}
+  }
+  requestAnimationFrame(frame);
+}
+
+function finishIntro(){
+  if(launched)return;launched=true;
+  stxt.textContent='All systems online! Launching…';stxt.style.color='#0AFFE6';
+  setTimeout(()=>{
+    const intro=document.getElementById('intro');
+    intro.classList.add('away');
+    document.body.style.overflow='';
+    document.documentElement.style.overflow='';
+    const port=document.getElementById('portfolio');
+    port.classList.add('visible');
+    setTimeout(()=>{
+      intro.style.display='none';
+      document.querySelectorAll('.skf').forEach((el,i)=>setTimeout(()=>{el.style.width=el.dataset.pct+'%';},i*80+400));
+      const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v');}),{threshold:.12});
+      document.querySelectorAll('.sr').forEach(el=>obs.observe(el));
+    },900);
+  },700);
+}
+
+robot.addEventListener('mousedown',e=>{e.preventDefault();isDragging=true;robot.style.cursor='grabbing';});
+document.addEventListener('mousemove',e=>{
+  if(!isDragging||launched)return;
+  robotX=Math.max(START_X,Math.min(CENTER.x,svgX(e.clientX)));
+  updateRobot();
+  if(robotX>=CENTER.x-4)snapToCenter();
+});
+const endDrag=()=>{
+  if(!isDragging)return;isDragging=false;robot.style.cursor='grab';
+  if(progress()>=.88)snapToCenter();
+};
+document.addEventListener('mouseup',endDrag);
+
+robot.addEventListener('touchstart',e=>{
+  e.preventDefault();
+  isDragging=true;
+  robot.style.cursor='grabbing';
+},{passive:false});
+document.addEventListener('touchmove',e=>{
+  if(!isDragging||launched)return;
+  e.preventDefault();
+  robotX=Math.max(START_X,Math.min(CENTER.x,svgX(e.touches[0].clientX)));
+  updateRobot();
+  if(robotX>=CENTER.x-4)snapToCenter();
+},{passive:false});
+document.addEventListener('touchend',()=>{
+  if(!isDragging)return;isDragging=false;
+  if(progress()>=.88)snapToCenter();
+});
+
+document.body.style.overflowY='hidden';
+
+const tkItems=['Python / Java','ML Pipelines','LLM Integration','RAG / FAISS','AWS / GCP','Docker / Kubernetes','Apache Spark','Airflow DAGs','OpenAI API','Agentic AI','CI/CD / Terraform','Applied AI'];
+const tk=document.getElementById('ticker');
+tk.innerHTML=[...tkItems,...tkItems].map(s=>`<span class="tkm">◆ ${s}</span>`).join('')+[...tkItems,...tkItems].map(s=>`<span class="tkm">◆ ${s}</span>`).join('');
+</script>
+</body>
+</html>
